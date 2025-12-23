@@ -51,7 +51,7 @@ const Reports = () => {
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', `report-${id}.pdf`); // Default to pdf or check mime
+            link.setAttribute('download', `report-${id}.pdf`);
             document.body.appendChild(link);
             link.click();
         } catch (err) {
@@ -72,64 +72,65 @@ const Reports = () => {
     };
 
     return (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-            <div className="flex justify-between items-center">
-                <h1 className="text-3xl font-bold text-slate-800">Medical Reports</h1>
-                <div className="flex space-x-3">
-                    <button onClick={() => setIsShareOpen(true)} className="btn-secondary flex items-center space-x-2">
-                        <Share className="h-4 w-4" />
+        <div className="page-container">
+            <div className="page-header">
+                <h1 className="page-title">Medical Reports</h1>
+                <div className="header-actions">
+                    <button onClick={() => setIsShareOpen(true)} className="btn-secondary">
+                        <Share size={16} />
                         <span>Share Access</span>
                     </button>
-                    <button onClick={() => setIsUploadOpen(true)} className="btn-primary flex items-center space-x-2">
-                        <Upload className="h-5 w-5" />
+                    <button onClick={() => setIsUploadOpen(true)} className="btn-primary">
+                        <Upload size={20} />
                         <span>Upload Report</span>
                     </button>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="reports-grid">
                 {reports.map((report) => (
-                    <div key={report.id} className="card hover:shadow-xl transition-all cursor-pointer group">
-                        <div className="flex items-start justify-between mb-4">
-                            <div className="p-3 bg-sky-50 rounded-lg group-hover:bg-primary group-hover:text-white transition-colors">
-                                <FileText className="h-6 w-6 text-primary group-hover:text-white" />
+                    <div key={report.id} className="report-card">
+                        <div className="report-header">
+                            <div className="report-icon-container">
+                                <FileText size={24} />
                             </div>
-                            <span className="text-xs font-semibold px-2 py-1 bg-slate-100 rounded-full text-slate-600">
-                                {report.type}
-                            </span>
+                            <span className="report-badge">{report.type}</span>
                         </div>
-                        <h3 className="text-lg font-bold text-slate-800 mb-1">{report.title}</h3>
-                        <p className="text-sm text-slate-500 mb-4">{new Date(report.date).toLocaleDateString()}</p>
+                        <h3 className="report-title">{report.title}</h3>
+                        <p className="report-date">{new Date(report.date).toLocaleDateString()}</p>
 
-                        <button onClick={() => handleView(report.id)} className="w-full btn-secondary text-sm flex justify-center items-center space-x-2">
-                            <Download className="h-4 w-4" />
+                        <button onClick={() => handleView(report.id)} className="btn-secondary" style={{ width: '100%', fontSize: '0.875rem' }}>
+                            <Download size={16} />
                             <span>Download</span>
                         </button>
                     </div>
                 ))}
                 {reports.length === 0 && (
-                    <div className="col-span-full text-center py-12 text-slate-400">
+                    <div className="col-span-full no-records">
                         No reports uploaded yet.
                     </div>
                 )}
             </div>
 
             {isUploadOpen && (
-                <div className="fixed inset-0 bg-slate-900 bg-opacity-50 flex items-center justify-center z-50 p-4">
-                    <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6">
-                        <h2 className="text-xl font-bold mb-4 text-slate-800">Upload Report</h2>
-                        <form onSubmit={handleUpload} className="space-y-4">
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700">File</label>
-                                <input type="file" className="input-field mt-1" required onChange={e => setFile(e.target.files[0])} />
+                <div className="modal-overlay">
+                    <div className="modal">
+                        <div className="modal-header">
+                            <h2>Upload Report</h2>
+                            <p>Upload your medical test reports</p>
+                        </div>
+                        <form onSubmit={handleUpload}>
+                            <div className="form-group">
+                                <label className="form-label">File</label>
+                                <input type="file" className="input-field" required onChange={e => setFile(e.target.files[0])} />
                             </div>
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700">Title</label>
-                                <input type="text" className="input-field mt-1" required value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} placeholder="e.g. Annual Checkup" />
+                            <div className="form-group">
+                                <label className="form-label">Title</label>
+                                <input type="text" className="input-field" required value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} placeholder="e.g. Annual Checkup" />
                             </div>
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700">Type</label>
-                                <select className="input-field mt-1" value={formData.type} onChange={e => setFormData({ ...formData, type: e.target.value })}>
+                            <div className="form-group">
+                                <label className="form-label">Type</label>
+                                <select className="input-field" value={formData.type} onChange={e => setFormData({ ...formData, type: e.target.value })}>
                                     <option>Blood Test</option>
                                     <option>X-Ray</option>
                                     <option>Prescription</option>
@@ -137,11 +138,11 @@ const Reports = () => {
                                     <option>Vaccination</option>
                                 </select>
                             </div>
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700">Date</label>
-                                <input type="date" className="input-field mt-1" required value={formData.date} onChange={e => setFormData({ ...formData, date: e.target.value })} />
+                            <div className="form-group">
+                                <label className="form-label">Date</label>
+                                <input type="date" className="input-field" required value={formData.date} onChange={e => setFormData({ ...formData, date: e.target.value })} />
                             </div>
-                            <div className="flex justify-end space-x-3 mt-6">
+                            <div className="modal-actions">
                                 <button type="button" onClick={() => setIsUploadOpen(false)} className="btn-secondary">Cancel</button>
                                 <button type="submit" className="btn-primary">Upload</button>
                             </div>
@@ -151,16 +152,18 @@ const Reports = () => {
             )}
 
             {isShareOpen && (
-                <div className="fixed inset-0 bg-slate-900 bg-opacity-50 flex items-center justify-center z-50 p-4">
-                    <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6">
-                        <h2 className="text-xl font-bold mb-4 text-slate-800">Share Access</h2>
-                        <p className="text-sm text-slate-500 mb-4">Grant read-only access to your reports to a family member or doctor.</p>
-                        <form onSubmit={handleShare} className="space-y-4">
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700">User Email</label>
-                                <input type="email" className="input-field mt-1" required value={shareEmail} onChange={e => setShareEmail(e.target.value)} placeholder="doctor@example.com" />
+                <div className="modal-overlay">
+                    <div className="modal">
+                        <div className="modal-header">
+                            <h2>Share Access</h2>
+                            <p>Grant read-only access to your reports to a family member or doctor.</p>
+                        </div>
+                        <form onSubmit={handleShare}>
+                            <div className="form-group">
+                                <label className="form-label">User Email</label>
+                                <input type="email" className="input-field" required value={shareEmail} onChange={e => setShareEmail(e.target.value)} placeholder="doctor@example.com" />
                             </div>
-                            <div className="flex justify-end space-x-3 mt-6">
+                            <div className="modal-actions">
                                 <button type="button" onClick={() => setIsShareOpen(false)} className="btn-secondary">Cancel</button>
                                 <button type="submit" className="btn-primary">Share</button>
                             </div>

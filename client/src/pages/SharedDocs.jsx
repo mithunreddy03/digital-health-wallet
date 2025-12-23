@@ -33,35 +33,33 @@ const SharedDocs = () => {
     };
 
     return (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-            <h1 className="text-3xl font-bold text-slate-800">Shared With Me</h1>
+        <div className="page-container">
+            <h1 className="page-title">Shared With Me</h1>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="reports-grid">
                 {reports.map((report) => (
-                    <div key={report.id} className="card hover:shadow-xl transition-all">
-                        <div className="flex items-center space-x-2 mb-4 text-xs text-slate-500 uppercase tracking-wide font-bold">
-                            <User className="h-4 w-4 text-slate-400" />
+                    <div key={report.id} className="report-card">
+                        <div className="report-owner">
+                            <User size={16} />
                             <span>{report.User?.name || 'Unknown'}</span>
                         </div>
-                        <div className="flex items-start justify-between mb-4">
-                            <div className="p-3 bg-indigo-50 rounded-lg text-indigo-600">
-                                <FileText className="h-6 w-6" />
+                        <div className="report-header">
+                            <div className="shared-icon-container">
+                                <FileText size={24} />
                             </div>
-                            <span className="text-xs font-semibold px-2 py-1 bg-slate-100 rounded-full text-slate-600">
-                                {report.type}
-                            </span>
+                            <span className="report-badge">{report.type}</span>
                         </div>
-                        <h3 className="text-lg font-bold text-slate-800 mb-1">{report.title}</h3>
-                        <p className="text-sm text-slate-500 mb-4">{new Date(report.date).toLocaleDateString()}</p>
+                        <h3 className="report-title">{report.title}</h3>
+                        <p className="report-date">{new Date(report.date).toLocaleDateString()}</p>
 
-                        <button onClick={() => handleDownload(report.id)} className="w-full btn-secondary text-sm flex justify-center items-center space-x-2">
-                            <Download className="h-4 w-4" />
+                        <button onClick={() => handleDownload(report.id)} className="btn-secondary" style={{ width: '100%', fontSize: '0.875rem' }}>
+                            <Download size={16} />
                             <span>Download</span>
                         </button>
                     </div>
                 ))}
                 {reports.length === 0 && (
-                    <div className="col-span-full text-center py-12 text-slate-400">
+                    <div className="col-span-full no-records">
                         No reports shared with you yet.
                     </div>
                 )}
