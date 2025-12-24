@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
-import { Upload, FileText, Download, Share, Users } from 'lucide-react';
+import { Upload, FileText, Download, Share, Users, MessageCircle } from 'lucide-react';
 import ReportFilters from '../components/ReportFilters';
 
 const Reports = () => {
@@ -97,6 +97,18 @@ const Reports = () => {
         setFilters({ type: '', startDate: '', endDate: '', search: '' });
     };
 
+    const handleWhatsAppShare = (report) => {
+        // Generate shareable link (using current domain)
+        const reportUrl = `${window.location.origin}/reports/${report.id}`;
+        const message = `Check out my medical report: ${report.title} (${report.type}) from ${new Date(report.date).toLocaleDateString()}.\n\nView it here: ${reportUrl}`;
+
+        // WhatsApp URL scheme
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+
+        // Open WhatsApp
+        window.open(whatsappUrl, '_blank');
+    };
+
     return (
         <div className="page-container">
             <div className="page-header">
@@ -127,10 +139,15 @@ const Reports = () => {
                         <h3 className="report-title">{report.title}</h3>
                         <p className="report-date">{new Date(report.date).toLocaleDateString()}</p>
 
-                        <button onClick={() => handleView(report.id)} className="btn-secondary" style={{ width: '100%', fontSize: '0.875rem' }}>
-                            <Download size={16} />
-                            <span>Download</span>
-                        </button>
+                        <div className="report-actions">
+                            <button onClick={() => handleView(report.id)} className="btn-secondary" style={{ flex: 1, fontSize: '0.875rem' }}>
+                                <Download size={16} />
+                                <span>Download</span>
+                            </button>
+                            <button onClick={() => handleWhatsAppShare(report)} className="btn-whatsapp" title="Share via WhatsApp">
+                                <MessageCircle size={16} />
+                            </button>
+                        </div>
                     </div>
                 ))}
                 {reports.length === 0 && (

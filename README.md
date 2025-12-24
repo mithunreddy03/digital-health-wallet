@@ -85,6 +85,7 @@ graph TD
   - Upload medical reports (PDF, images) via web interface
   - Filter reports by type, date range, or search by title
   - Download/View reports securely
+  - **Share via WhatsApp**: One-click sharing of report links through WhatsApp
 - **Selective Sharing**: Grant access to specific reports to trusted contacts (family members, doctors, friends).
 - **Mobile & Multi-Channel Upload**: Upload reports from any device (see instructions below).
 
@@ -133,5 +134,24 @@ Filter your reports easily:
 - **By Date Range**: Select start and end dates
 - **By Title**: Search for specific reports
 - **Clear Filters**: Reset all filters with one click
+
+## 💬 Share Reports via WhatsApp
+
+Each report has a WhatsApp share button that allows you to instantly share report links with family, friends, or doctors.
+
+**How it works:**
+1. Click the WhatsApp icon (💬) on any report card
+2. WhatsApp opens with a pre-filled message containing:
+   - Report title and type
+   - Report date
+   - Secure link to view the report
+3. Select a contact or group to share with
+4. Send the message
+
+**Benefits:**
+- ✅ No WhatsApp Business API required
+- ✅ Works on both mobile and desktop
+- ✅ Secure links to your reports
+- ✅ Easy sharing with doctors and family members
 
 ## 🔐 Security
