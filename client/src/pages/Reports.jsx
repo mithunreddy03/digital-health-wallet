@@ -1,23 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
-import { Upload, FileText, Download, Share } from 'lucide-react';
+import { Upload, FileText, Download, Share, Users } from 'lucide-react';
+import ReportFilters from '../components/ReportFilters';
 
 const Reports = () => {
     const [reports, setReports] = useState([]);
     const [isUploadOpen, setIsUploadOpen] = useState(false);
     const [isShareOpen, setIsShareOpen] = useState(false);
     const [shareEmail, setShareEmail] = useState('');
+    const [selectedReports, setSelectedReports] = useState([]);
+    const [filters, setFilters] = useState({ type: '', startDate: '', endDate: '', search: '' });
 
     const [file, setFile] = useState(null);
     const [formData, setFormData] = useState({ title: '', type: 'Blood Test', date: new Date().toISOString().split('T')[0] });
 
     useEffect(() => {
         fetchReports();
-    }, []);
+    }, [filters]);
 
     const fetchReports = async () => {
         try {
-            const res = await api.get('/reports');
+            const params = new URLSearchParams();
+            if (filters.type) params.append('type', filters.type);
+            if (filters.startDate) params.append('startDate', filters.startDate);
+            if (filters.endDate) params.append('endDate', filters.endDate);
+            if (filters.search) params.append('search', filters.search);
+
+            const res = await api.get(`/reports?${params.toString()}`);
             setReports(res.data);
         } catch (err) {
             console.error(err);
@@ -61,14 +70,31 @@ const Reports = () => {
 
     const handleShare = async (e) => {
         e.preventDefault();
+        if (selectedReports.length === 0) {
+            alert('Please select at least one report to share');
+            return;
+        }
         try {
-            await api.post('/share/grant', { email: shareEmail });
-            alert('Access granted successfully');
+            await api.post('/share/grant', { email: shareEmail, reportIds: selectedReports });
+            alert(`Successfully shared ${selectedReports.length} report(s)`);
             setIsShareOpen(false);
             setShareEmail('');
+            setSelectedReports([]);
         } catch (err) {
             alert(err.response?.data?.message || 'Failed to share');
         }
+    };
+
+    const toggleReportSelection = (reportId) => {
+        setSelectedReports(prev =>
+            prev.includes(reportId)
+                ? prev.filter(id => id !== reportId)
+                : [...prev, reportId]
+        );
+    };
+
+    const clearFilters = () => {
+        setFilters({ type: '', startDate: '', endDate: '', search: '' });
     };
 
     return (
@@ -86,6 +112,8 @@ const Reports = () => {
                     </button>
                 </div>
             </div>
+
+            <ReportFilters filters={filters} setFilters={setFilters} onClear={clearFilters} />
 
             <div className="reports-grid">
                 {reports.map((report) => (
@@ -107,7 +135,7 @@ const Reports = () => {
                 ))}
                 {reports.length === 0 && (
                     <div className="col-span-full no-records">
-                        No reports uploaded yet.
+                        No reports found. {(filters.type || filters.startDate || filters.endDate || filters.search) && 'Try adjusting your filters.'}
                     </div>
                 )}
             </div>
@@ -153,19 +181,51 @@ const Reports = () => {
 
             {isShareOpen && (
                 <div className="modal-overlay">
-                    <div className="modal">
+                    <div className="modal modal-large">
                         <div className="modal-header">
-                            <h2>Share Access</h2>
-                            <p>Grant read-only access to your reports to a family member or doctor.</p>
+                            <h2>Share Reports</h2>
+                            <p>Select specific reports to share with a family member or doctor</p>
                         </div>
                         <form onSubmit={handleShare}>
                             <div className="form-group">
                                 <label className="form-label">User Email</label>
                                 <input type="email" className="input-field" required value={shareEmail} onChange={e => setShareEmail(e.target.value)} placeholder="doctor@example.com" />
                             </div>
+
+                            <div className="form-group">
+                                <label className="form-label">
+                                    <Users size={16} />
+                                    Select Reports to Share ({selectedReports.length} selected)
+                                </label>
+                                <div className="report-selection-list">
+                                    {reports.length === 0 ? (
+                                        <p className="no-records">No reports available to share</p>
+                                    ) : (
+                                        reports.map(report => (
+                                            <label key={report.id} className="report-checkbox-item">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={selectedReports.includes(report.id)}
+                                                    onChange={() => toggleReportSelection(report.id)}
+                                                />
+                                                <div className="report-checkbox-content">
+                                                    <div className="report-checkbox-title">{report.title}</div>
+                                                    <div className="report-checkbox-meta">
+                                                        <span className="report-badge-small">{report.type}</span>
+                                                        <span>{new Date(report.date).toLocaleDateString()}</span>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        ))
+                                    )}
+                                </div>
+                            </div>
+
                             <div className="modal-actions">
-                                <button type="button" onClick={() => setIsShareOpen(false)} className="btn-secondary">Cancel</button>
-                                <button type="submit" className="btn-primary">Share</button>
+                                <button type="button" onClick={() => { setIsShareOpen(false); setSelectedReports([]); }} className="btn-secondary">Cancel</button>
+                                <button type="submit" className="btn-primary" disabled={selectedReports.length === 0}>
+                                    Share {selectedReports.length > 0 && `(${selectedReports.length})`}
+                                </button>
                             </div>
                         </form>
                     </div>

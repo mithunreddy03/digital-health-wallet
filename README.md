@@ -79,7 +79,59 @@ graph TD
 - **Data Protection**: File paths are stored in DB, but files are served via a protected route (`/api/reports/:id/file`) that validates permissions, preventing direct URL access.
 
 ## 📦 Features
-- **User Management**: Sign up/Login.
-- **Vitals Tracking**: Add and visualize health metrics (Heart Rate, BP, etc.).
-- **Report Management**: Upload/View PDF or Image reports.
-- **Sharing**: Grant access to trusted contacts.
+- **User Management**: Sign up/Login with secure authentication.
+- **Vitals Tracking**: Add and visualize health metrics (Heart Rate, BP, Blood Glucose, Weight) with interactive charts.
+- **Report Management**: 
+  - Upload medical reports (PDF, images) via web interface
+  - Filter reports by type, date range, or search by title
+  - Download/View reports securely
+- **Selective Sharing**: Grant access to specific reports to trusted contacts (family members, doctors, friends).
+- **Mobile & Multi-Channel Upload**: Upload reports from any device (see instructions below).
+
+## 📱 Mobile & WhatsApp Upload
+
+### Web Upload from Mobile
+1. Open the Digital Health Wallet website on your mobile browser
+2. Navigate to the "Reports" section
+3. Tap "Upload Report"
+4. Select files from your device (camera, gallery, or downloads)
+5. Fill in report details and upload
+
+### WhatsApp Reports Upload Workflow
+
+**For reports received via WhatsApp:**
+
+1. **Save the Document**:
+   - Open WhatsApp and navigate to the chat with the report
+   - Tap on the document/image
+   - Tap the download/save icon
+   - The file will be saved to your device
+
+2. **Upload to Health Wallet**:
+   - Open the Digital Health Wallet on your mobile browser
+   - Go to Reports → Upload Report
+   - Select the saved file from your device
+   - Add title, type, and date
+   - Submit
+
+**Alternative: Desktop Upload**
+- Transfer files from your phone to computer via USB, cloud storage (Google Drive, Dropbox), or email
+- Upload through the web interface on desktop
+
+### Future Enhancement: WhatsApp Business API Integration
+For automated WhatsApp uploads, we plan to integrate WhatsApp Business API which will allow:
+- Direct upload by sending reports to a dedicated WhatsApp number
+- Automatic processing and categorization
+- Confirmation messages
+
+**Note**: This requires WhatsApp Business API setup, business verification, and webhook infrastructure.
+
+## 🔍 Report Filtering
+
+Filter your reports easily:
+- **By Type**: Blood Test, X-Ray, Prescription, MRI, Vaccination
+- **By Date Range**: Select start and end dates
+- **By Title**: Search for specific reports
+- **Clear Filters**: Reset all filters with one click
+
+## 🔐 Security

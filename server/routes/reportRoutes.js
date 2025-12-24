@@ -27,10 +27,33 @@ router.post('/', auth, upload.single('file'), async (req, res) => {
     }
 });
 
-// List My Reports
+// List My Reports (with optional filters)
 router.get('/', auth, async (req, res) => {
     try {
-        const reports = await Report.findAll({ where: { userId: req.user.id }, order: [['date', 'DESC']] });
+        const { type, startDate, endDate, search } = req.query;
+        const { Op } = require('sequelize');
+
+        // Build where clause
+        const whereClause = { userId: req.user.id };
+
+        if (type) {
+            whereClause.type = type;
+        }
+
+        if (startDate || endDate) {
+            whereClause.date = {};
+            if (startDate) whereClause.date[Op.gte] = startDate;
+            if (endDate) whereClause.date[Op.lte] = endDate;
+        }
+
+        if (search) {
+            whereClause.title = { [Op.like]: `%${search}%` };
+        }
+
+        const reports = await Report.findAll({
+            where: whereClause,
+            order: [['date', 'DESC']]
+        });
         res.json(reports);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -47,7 +70,11 @@ router.get('/:id/file', auth, async (req, res) => {
         let hasAccess = report.userId === req.user.id;
         if (!hasAccess) {
             const grant = await AccessGrant.findOne({
-                where: { ownerId: report.userId, viewerId: req.user.id }
+                where: {
+                    ownerId: report.userId,
+                    viewerId: req.user.id,
+                    reportId: report.id
+                }
             });
             if (grant) hasAccess = true;
         }

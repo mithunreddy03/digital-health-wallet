@@ -24,10 +24,25 @@ const AccessGrant = sequelize.define('AccessGrant', {
             key: 'id'
         }
     },
+    reportId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'Reports',
+            key: 'id'
+        }
+    },
     permissions: {
         type: DataTypes.STRING, // 'read-only'
         defaultValue: 'read-only'
     }
+}, {
+    indexes: [
+        {
+            unique: true,
+            fields: ['ownerId', 'viewerId', 'reportId']
+        }
+    ]
 });
 
 // Relationships
