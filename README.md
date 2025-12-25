@@ -2,14 +2,14 @@
 
 A secure, accessible Health Wallet web application where users can upload test reports, track vitals over time, and share records with family or doctors.
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 - **Frontend:** ReactJS (Vite), TailwindCSS, Recharts, Axios, Lucide-React
 - **Backend:** Node.js, Express.js, Sequelize ORM
 - **Database:** SQLite
 - **File Storage:** Local filesystem (`server/uploads`)
 
-## 🧱 Architecture
+## Architecture
 
 ### System Diagram
 ```mermaid
@@ -35,7 +35,7 @@ graph TD
 - **Backend**: RESTful API ensuring secure access control using JWT. Handles file uploads and serves them only to authorized users (Access Control Logic).
 - **Database**: Relational schema (Users, Reports, Vitals, AccessGrants) ensuring integrity and efficient querying.
 
-## 🚀 Setup Instructions
+## Setup Instructions
 
 ### Prerequisites
 - Node.js installed
@@ -70,7 +70,7 @@ graph TD
    ```
    App runs on `http://localhost:5173`.
 
-## 🔐 Security
+## Security
 - **Authentication**: Passwords are hashed using `bcrypt` before storage. JWT tokens are used for session management.
 - **Access Control**: 
   - Reports are private by default.
@@ -78,7 +78,7 @@ graph TD
   - Backend verifies ownership or presence of an `AccessGrant` before serving files.
 - **Data Protection**: File paths are stored in DB, but files are served via a protected route (`/api/reports/:id/file`) that validates permissions, preventing direct URL access.
 
-## 📦 Features
+## Features
 - **User Management**: Sign up/Login with secure authentication.
 - **Vitals Tracking**: Add and visualize health metrics (Heart Rate, BP, Blood Glucose, Weight) with interactive charts.
 - **Report Management**: 
@@ -89,7 +89,7 @@ graph TD
 - **Selective Sharing**: Grant access to specific reports to trusted contacts (family members, doctors, friends).
 - **Mobile & Multi-Channel Upload**: Upload reports from any device (see instructions below).
 
-## 📱 Mobile & WhatsApp Upload
+## Mobile & WhatsApp Upload
 
 ### Web Upload from Mobile
 1. Open the Digital Health Wallet website on your mobile browser
@@ -127,7 +127,7 @@ For automated WhatsApp uploads, we plan to integrate WhatsApp Business API which
 
 **Note**: This requires WhatsApp Business API setup, business verification, and webhook infrastructure.
 
-## 🔍 Report Filtering
+## Report Filtering
 
 Filter your reports easily:
 - **By Type**: Blood Test, X-Ray, Prescription, MRI, Vaccination
@@ -135,7 +135,7 @@ Filter your reports easily:
 - **By Title**: Search for specific reports
 - **Clear Filters**: Reset all filters with one click
 
-## 💬 Share Reports via WhatsApp
+## Share Reports via WhatsApp
 
 Each report has a WhatsApp share button that allows you to instantly share report links with family, friends, or doctors.
 
@@ -154,4 +154,4 @@ Each report has a WhatsApp share button that allows you to instantly share repor
 - ✅ Secure links to your reports
 - ✅ Easy sharing with doctors and family members
 
-## 🔐 Security
+## Security

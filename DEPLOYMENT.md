@@ -1,8 +1,8 @@
-# 🚀 Deployment Guide - Digital Health Wallet
+# Deployment Guide - Digital Health Wallet
 
 Complete step-by-step guide to deploy your Digital Health Wallet application online for free!
 
-## 📋 Prerequisites
+## Prerequisites
 
 - GitHub account
 - Vercel account (free) - [Sign up here](https://vercel.com/signup)
@@ -10,7 +10,7 @@ Complete step-by-step guide to deploy your Digital Health Wallet application onl
 
 ---
 
-## 🎯 Deployment Overview
+## Deployment Overview
 
 We'll deploy:
 1. **Backend** (Node.js + SQLite) → Render
@@ -20,7 +20,7 @@ Total time: ~15-20 minutes
 
 ---
 
-## 📦 Step 1: Push Code to GitHub
+## Step 1: Push Code to GitHub
 
 Your code is already on GitHub at: `https://github.com/mithunreddy03/digital-health-wallet`
 
@@ -33,7 +33,7 @@ git push
 
 ---
 
-## 🔧 Step 2: Deploy Backend to Render
+## Step 2: Deploy Backend to Render
 
 ### 2.1 Create Render Account
 1. Go to [render.com](https://render.com)
@@ -76,7 +76,7 @@ Click "Advanced" and add these environment variables:
 
 ---
 
-## 🎨 Step 3: Deploy Frontend to Vercel
+## Step 3: Deploy Frontend to Vercel
 
 ### 3.1 Create Vercel Account
 1. Go to [vercel.com](https://vercel.com)
@@ -112,7 +112,7 @@ Replace `your-backend-url` with your actual Render backend URL from Step 2.3.
 
 ---
 
-## 🔄 Step 4: Update Backend CORS
+## Step 4: Update Backend CORS
 
 Now that you have your frontend URL, update the backend:
 
@@ -128,7 +128,7 @@ Now that you have your frontend URL, update the backend:
 
 ---
 
-## ✅ Step 5: Test Your Deployment
+## Step 5: Test Your Deployment
 
 1. Visit your Vercel URL (e.g., `https://digital-health-wallet.vercel.app`)
 2. Try to register a new account
@@ -143,7 +143,7 @@ Now that you have your frontend URL, update the backend:
 
 ---
 
-## 🎉 Your App is Live!
+## Your App is Live!
 
 **Frontend URL**: `https://your-app.vercel.app`  
 **Backend URL**: `https://your-api.onrender.com`
@@ -152,7 +152,7 @@ Share your app with anyone! 🌍
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Backend Issues
 
@@ -178,7 +178,7 @@ Share your app with anyone! 🌍
 
 ---
 
-## 💰 Cost Breakdown
+## Cost Breakdown
 
 | Service | Tier | Cost | Limits |
 |---------|------|------|--------|
@@ -188,7 +188,7 @@ Share your app with anyone! 🌍
 
 ---
 
-## 🚀 Upgrading (Optional)
+## Upgrading (Optional)
 
 ### To Keep Backend Always Awake:
 - Upgrade Render to Starter plan ($7/month)
@@ -200,7 +200,7 @@ Share your app with anyone! 🌍
 
 ---
 
-## 📝 Post-Deployment Checklist
+## Post-Deployment Checklist
 
 - [ ] Backend deployed and accessible
 - [ ] Frontend deployed and accessible
@@ -214,7 +214,7 @@ Share your app with anyone! 🌍
 
 ---
 
-## 🔐 Security Notes
+## Security Notes
 
 1. **Change JWT_SECRET**: Use a strong, random secret in production
 2. **HTTPS**: Both Vercel and Render provide free HTTPS
@@ -223,7 +223,7 @@ Share your app with anyone! 🌍
 
 ---
 
-## 📱 Share Your App
+## Share Your App
 
 Your app is now live! Share these URLs:
 
@@ -232,7 +232,7 @@ Your app is now live! Share these URLs:
 
 ---
 
-## 🆘 Need Help?
+## Need Help?
 
 - **Vercel Docs**: https://vercel.com/docs
 - **Render Docs**: https://render.com/docs
@@ -240,6 +240,6 @@ Your app is now live! Share these URLs:
 
 ---
 
-## 🎊 Congratulations!
+## Congratulations!
 
 Your Digital Health Wallet is now live and accessible to anyone in the world! 🌍✨
