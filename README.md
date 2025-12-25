@@ -2,6 +2,12 @@
 
 A secure, accessible Health Wallet web application where users can upload test reports, track vitals over time, and share records with family or doctors.
 
+## Live Deployment
+
+- **Frontend (App)**: https://digital-health-wallet-gamma.vercel.app/
+- **Backend (API)**: https://digital-health-wallet-hvtm.onrender.com
+- **GitHub Repository**: https://github.com/mithunreddy03/digital-health-wallet
+
 ## Technology Stack
 
 - **Frontend:** ReactJS (Vite), TailwindCSS, Recharts, Axios, Lucide-React
